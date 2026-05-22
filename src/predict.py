@@ -12,7 +12,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import StratifiedKFold, cross_val_score
 
 RANDOM_STATE = 42
-DATA_DIR  = "/Users/jimoon/Desktop/Gachon/Ba3-1/DataScience/TermProject"
+DATA_DIR  = "data/processed"
 PATH_MEAN  = f"{DATA_DIR}/preprocessed_mean.csv"
 PATH_FFILL = f"{DATA_DIR}/preprocessed_ffill.csv"
 

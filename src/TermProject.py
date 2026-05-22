@@ -148,7 +148,7 @@ from sklearn.preprocessing import StandardScaler
 
 
 # Numerical Feature Scaling
-df = pd.read_csv('data_encoded.csv')
+df = pd.read_csv('data/processed/data_encoded.csv')
 print(f"Successfully loaded 'data_encoded.csv'. Shape: {df.shape}")
 
 # Define numerical features to be scaled
@@ -169,5 +169,5 @@ scaling_stats = df[numerical_features].describe().loc[['mean', 'std']]
 print("\nVerification Statistics:")
 print(scaling_stats)
 
-df.to_csv('data_final_preprocessed.csv', index=False)
+df.to_csv('data/processed/data_final_preprocessed.csv', index=False)
 print('\nFinal dataset saved')

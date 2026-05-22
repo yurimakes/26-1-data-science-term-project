@@ -18,8 +18,8 @@ import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 
-DATA_PATH = "/Users/jimoon/Desktop/Gachon/Ba3-1/DataScience/TermProject/bank-direct-marketing-campaigns.csv"
-OUT_DIR   = "/Users/jimoon/Desktop/Gachon/Ba3-1/DataScience/TermProject"
+DATA_PATH = "data/raw/bank_direct_marketing_campaigns.csv"
+OUT_DIR   = "data/processed"
 OUT_MEAN  = os.path.join(OUT_DIR, "preprocessed_mean.csv")
 OUT_FFILL = os.path.join(OUT_DIR, "preprocessed_ffill.csv")
 
