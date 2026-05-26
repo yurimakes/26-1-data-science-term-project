@@ -43,6 +43,11 @@ Run evaluation:
 
 python src/evaluation.py
 
+Optional > 
+run step-by-step preprocessing and scaling verification:
+
+python src/TermProject.py
+
 ## Output Files
 
 The evaluation script generates the following output files:
