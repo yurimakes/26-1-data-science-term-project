@@ -39,7 +39,7 @@ To address this, the final evaluation considers:
 - ROC-AUC
 - Confusion Matrix
 
-The default evaluation workflow selects the best configuration using **F1-score** rather than accuracy alone.
+The evaluation workflow uses **F1-score as the primary selection criterion among the tested configurations**, while also reviewing recall and ROC-AUC to avoid relying on accuracy alone.
 
 ## Pipeline
 
@@ -78,9 +78,9 @@ The evaluation compares multiple configurations of Logistic Regression and Rando
 | Logistic Regression | `C=0.1`, `C=1.0`, `C=10.0` |
 | Random Forest | `n_estimators=100/200`, `max_depth=None/10` |
 
-### Selected Final Configuration
+### Best Tested Configuration by F1-score
 
-The final test-set evaluation selected:
+Among the configurations evaluated in this coursework, the final test-set evaluation selected:
 
 - **Preprocessing:** Forward-Fill experiment
 - **Model:** Random Forest (`n_estimators=200`, `max_depth=None`)
@@ -93,7 +93,26 @@ The final test-set evaluation selected:
 | F1-score | 0.3876 |
 | ROC-AUC | 0.7742 |
 
-The result shows why a single accuracy value is insufficient for this task: the model achieves relatively high overall accuracy while recall for the positive class remains limited.
+### Result Interpretation
+
+The relatively high accuracy should **not** be interpreted as strong overall classification performance by itself.
+
+Because the positive class is a minority, a model can achieve high accuracy by predicting the majority class well while still missing many actual subscribers. In this experiment:
+
+- **Precision = 0.5511** means that about 55% of customers predicted as subscribers were actually subscribers.
+- **Recall = 0.2989** means that the model identified only about 30% of the actual subscribers.
+- **F1-score = 0.3876** reflects the limited balance between precision and recall.
+- **ROC-AUC = 0.7742** indicates that the model has meaningful discriminatory ability, but there is substantial room for improvement.
+
+This result is therefore treated as a **baseline analytical outcome rather than a production-ready model**.
+
+The project intentionally reports these limitations instead of presenting accuracy alone as the main success metric.
+
+### Why This Matters
+
+One of the main findings of this project is that **accuracy can be misleading for imbalanced classification problems**.
+
+The initial workflow emphasized accuracy, but the evaluation was extended to include precision, recall, F1-score, ROC-AUC, and a confusion matrix. This made it possible to identify the low positive-class recall that would otherwise be hidden by the overall accuracy.
 
 Detailed comparison results are available in:
 
@@ -181,7 +200,7 @@ This repository preserves both the original coursework workflow and a later mult
 Important limitations and improvement opportunities include:
 
 1. **Class imbalance**  
-   Accuracy is not sufficient by itself, so F1-score, precision, recall, and ROC-AUC are also reported.
+   Accuracy is not sufficient by itself. The current model shows relatively low recall for the positive class, so F1-score, precision, recall, ROC-AUC, and the confusion matrix are reported together.
 
 2. **Forward-fill is experimental**  
    Forward-fill is included as a comparison strategy, but row order in this dataset does not provide a strong theoretical basis for using it as a production imputation method.
@@ -189,10 +208,28 @@ Important limitations and improvement opportunities include:
 3. **Potential preprocessing leakage**  
    Some preprocessing is performed before cross-validation. A stronger production workflow would place imputation, encoding, scaling, and modeling inside a scikit-learn `Pipeline` so transformations are fitted only on each training fold.
 
-4. **Further model selection**  
-   Future work could use `GridSearchCV` or `RandomizedSearchCV` and compare additional imbalance-aware approaches.
+4. **Limited imbalance handling**  
+   The current Random Forest configuration does not explicitly use imbalance-aware techniques such as `class_weight="balanced"`, resampling, or threshold tuning.
+
+5. **Limited model search**  
+   The current comparison covers Logistic Regression and Random Forest with a small number of parameter combinations. Broader model selection and tuning could improve performance.
 
 See `report/predict_report.md` for the detailed methodology review.
+
+## Future Improvements
+
+If this project is extended beyond the coursework version, the following improvements would be the next priorities:
+
+- rebuild preprocessing and modeling with a scikit-learn `Pipeline`
+- evaluate `class_weight="balanced"` for Logistic Regression and Random Forest
+- compare resampling approaches such as SMOTE where appropriate
+- tune the classification threshold based on business objectives
+- use `GridSearchCV` or `RandomizedSearchCV` for broader hyperparameter optimization
+- compare additional models such as gradient boosting methods
+- evaluate Precision-Recall AUC in addition to ROC-AUC
+- define a business-oriented objective, such as maximizing subscriber recall under a fixed contact budget
+
+The current repository is therefore best understood as a **coursework baseline with explicit methodological review and a clear path for further development**.
 
 ## Team
 
