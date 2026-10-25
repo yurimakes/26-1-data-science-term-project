@@ -214,7 +214,7 @@ Important limitations and improvement opportunities include:
 5. **Limited model search**  
    The current comparison covers Logistic Regression and Random Forest with a small number of parameter combinations. Broader model selection and tuning could improve performance.
 
-See `report/predict_report.md` for the detailed methodology review.
+See [the methodology review](report/predict_report.md) for the detailed analysis.
 
 ## Future Improvements
 
